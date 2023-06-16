@@ -1,0 +1,5 @@
+/* Hide undefined custom elements */
+/* @link https://www.abeautifulsite.net/posts/flash-of-undefined-custom-elements/ */
+:not(:defined) {
+    visibility: hidden;
+}
