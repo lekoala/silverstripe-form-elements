@@ -2,9 +2,6 @@
 
 namespace LeKoala\FormElements;
 
-use LeKoala\Base\Helpers\CurrencyFormatter;
-use LeKoala\Base\Forms\NumericReadonlyField;
-
 /**
  * Format numbers
  *
