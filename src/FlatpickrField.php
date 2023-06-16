@@ -24,11 +24,6 @@ class FlatpickrField extends TextField implements LocalizableField
     const DEFAULT_ALT_DATETIME_FORMAT = 'l j F Y H:i';
 
     /**
-     * @var bool
-     */
-    protected $html5 = true;
-
-    /**
      * Override locale. If empty will default to current locale
      *
      * @var string
@@ -58,25 +53,6 @@ class FlatpickrField extends TextField implements LocalizableField
      * @var string
      */
     protected $theme;
-
-    /**
-     * Id of the second element
-     *
-     * @var string
-     */
-    protected $range;
-
-    /**
-     * Add confirm box
-     *
-     * @var bool
-     */
-    protected $confirmDate;
-
-    /**
-     * @var bool
-     */
-    protected $monthSelect;
 
     /**
      * @config
@@ -310,7 +286,7 @@ class FlatpickrField extends TextField implements LocalizableField
      */
     public function getRange()
     {
-        return $this->range;
+        return $this->getElementAttribute('data-range');
     }
 
     /**
@@ -324,7 +300,7 @@ class FlatpickrField extends TextField implements LocalizableField
      */
     public function setRange($range, $confirm = true)
     {
-        $this->range = $range;
+        $this->setElementAttribute('data-range', $range);
         if ($confirm) {
             $this->setConfirmDate(true);
         }
@@ -338,7 +314,7 @@ class FlatpickrField extends TextField implements LocalizableField
      */
     public function getConfirmDate()
     {
-        return $this->confirmDate;
+        return $this->getElementAttribute('data-confirm-date');
     }
 
     /**
@@ -350,8 +326,7 @@ class FlatpickrField extends TextField implements LocalizableField
      */
     public function setConfirmDate($confirmDate)
     {
-        $this->confirmDate = $confirmDate;
-        return $this;
+        return $this->setElementAttribute('data-confirm-date', $confirmDate);
     }
 
     /**
@@ -359,7 +334,7 @@ class FlatpickrField extends TextField implements LocalizableField
      */
     public function getMonthSelect()
     {
-        return $this->monthSelect;
+        return $this->getElementAttribute('data-month-select');
     }
 
     /**
@@ -369,8 +344,7 @@ class FlatpickrField extends TextField implements LocalizableField
      */
     public function setMonthSelect($monthSelect)
     {
-        $this->monthSelect = $monthSelect;
-        return $this;
+        return $this->setElementAttribute('data-month-select', $monthSelect);
     }
 
     /**
@@ -393,27 +367,6 @@ class FlatpickrField extends TextField implements LocalizableField
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getHTML5()
-    {
-        return $this->html5;
-    }
-
-
-    /**
-     * This is required (and ignored) because DBDate use this to scaffold the field
-     *
-     * @param boolean $bool
-     * @return $this
-     */
-    public function setHTML5($bool)
-    {
-        $this->html5 = $bool;
-        return $this;
-    }
-
     public function setDescription($description)
     {
         // Allows blocking scaffolded UI desc that has no uses
@@ -430,24 +383,13 @@ class FlatpickrField extends TextField implements LocalizableField
         if ($lang != 'en') {
             $this->setConfig('locale', $lang);
         }
-        $config = $this->config;
 
-        $data = [];
-        if ($this->range) {
-            $data[] = 'data-range="' . $this->range . '"';
-        }
-        if ($this->confirmDate) {
-            $data[] = 'data-confirm-date="true"';
-        }
-        if ($this->monthSelect) {
-            $data[] = 'data-month-select="true"';
-        }
         if ($this->hooks) {
             // Use replace callback format
             foreach ($this->hooks as $k => $v) {
-                $config[$k] = [
+                $this->setConfig($k, [
                     "__fn" => $v
-                ];
+                ]);
             }
         }
 
@@ -468,9 +410,7 @@ class FlatpickrField extends TextField implements LocalizableField
         // Time formatting can cause value change for no reasons
         $this->addExtraClass('no-change-track');
 
-        $config = json_encode($config);
-
-        return $this->wrapInElement('flatpickr-input', $properties, $data);
+        return $this->wrapInElement('flatpickr-input', $properties);
     }
 
     /**

@@ -114,8 +114,8 @@ trait BaseElement
         $parts = [];
 
         foreach ($attributes as $name => $value) {
-            if ($value === true) {
-                $value = $name;
+            if (is_bool($value)) {
+                $value = $value ? "true" : "false";
             } else {
                 if (is_scalar($value)) {
                     $value = (string) $value;

@@ -46,7 +46,7 @@ class TelInputField extends TextField
 
     public function Type()
     {
-        return 'tel-input';
+        return 'telinput';
     }
 
     public function extraClass()

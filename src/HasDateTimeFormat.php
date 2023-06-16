@@ -9,6 +9,11 @@ use SilverStripe\ORM\FieldType\DBDatetime;
 trait HasDateTimeFormat
 {
     /**
+     * @var bool
+     */
+    protected $html5 = true;
+
+    /**
      * Override date format. If empty will default to that used by the current locale.
      *
      * @var null
@@ -100,6 +105,26 @@ trait HasDateTimeFormat
 
         $this->timezone = $timezone;
 
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHTML5()
+    {
+        return $this->html5;
+    }
+
+    /**
+     * This is required (and ignored) because DBDate use this to scaffold the field
+     *
+     * @param boolean $bool
+     * @return $this
+     */
+    public function setHTML5($bool)
+    {
+        $this->html5 = $bool;
         return $this;
     }
 }
