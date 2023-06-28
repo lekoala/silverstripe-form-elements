@@ -32,6 +32,15 @@ trait CurrencyFormatter
     }
 
     /**
+     * Get the currency code
+     *
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
      * The currency code (eg: USD, EUR...)
      *
      * @return $this
