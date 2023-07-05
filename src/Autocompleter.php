@@ -137,19 +137,23 @@ trait Autocompleter
         $where = $this->ajaxWhere;
         if (!empty($where)) {
             // Deal with in clause
-            $customWhere = [];
-            foreach ($where as $col => $param) {
-                // For array, we need a IN statement with a ? for each value
-                if (is_array($param)) {
-                    $prepValue = [];
-                    $params = [];
-                    foreach ($param as $paramValue) {
-                        $params[] = $paramValue;
-                        $prepValue[] = "?";
+            if (is_string($where)) {
+                $customWhere = $where;
+            } else {
+                $customWhere = [];
+                foreach ($where as $col => $param) {
+                    // For array, we need a IN statement with a ? for each value
+                    if (is_array($param)) {
+                        $prepValue = [];
+                        $params = [];
+                        foreach ($param as $paramValue) {
+                            $params[] = $paramValue;
+                            $prepValue[] = "?";
+                        }
+                        $customWhere["$col IN (" . implode(',', $prepValue) . ")"] = $params;
+                    } else {
+                        $customWhere["$col = ?"] = $param;
                     }
-                    $customWhere["$col IN (" . implode(',', $prepValue) . ")"] = $params;
-                } else {
-                    $customWhere["$col = ?"] = $param;
                 }
             }
             $list = $list->where($customWhere);
