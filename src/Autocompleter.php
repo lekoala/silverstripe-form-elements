@@ -131,7 +131,7 @@ trait Autocompleter
         foreach ($searchCols as $searchCol) {
             $where[] = $searchCol . ' IS NOT NULL';
         }
-        $list = $list->where($where);
+        $list = $list->whereAny($where);
         // ... and matches search term ...
         $where = [];
         foreach ($searchCols as $searchCol) {
@@ -173,15 +173,15 @@ trait Autocompleter
             if (is_array($searchField)) {
                 $labelParts = [];
                 foreach ($searchField as $sf) {
-                    $labelParts[] = $record->$sf;
+                    $labelParts[] = $record->$sf ?? "";
                 }
                 $label = implode(" ", $labelParts);
             } else {
-                $label = $record->$searchField;
+                $label = $record->$searchField ?? "";
             }
             $data[] = [
                 $vars['valueField'] => $record->ID,
-                $vars['labelField'] => $label,
+                $vars['labelField'] => $label ?? "(no label)",
             ];
         }
         $body = json_encode([$vars['dataKey'] => $data]);
