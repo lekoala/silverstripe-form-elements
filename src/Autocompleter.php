@@ -50,6 +50,16 @@ trait Autocompleter
     protected $ajaxFilters = [];
 
     /**
+     * @var boolean
+     */
+    protected $ajaxFullSearch = false;
+
+    /**
+     * @var int
+     */
+    protected $recordsLimit = 1000;
+
+    /**
      * @var string
      */
     protected $customSearchField;
@@ -75,9 +85,12 @@ trait Autocompleter
 
         $vars = $this->getServerVars();
 
-        // Don't use % term as it prevents use of indexes
+        // Don't use by default % at the start of term as it prevents use of indexes
         $term = $request->getVar($vars['queryParam']) . '%';
         $term = str_replace(' ', '%', $term);
+        if ($this->ajaxFullSearch) {
+            $term = "%" . $term;
+        }
 
         $class = $this->ajaxClass;
 
@@ -167,6 +180,9 @@ trait Autocompleter
             }
             $list = $list->where($customWhere);
         }
+
+        $list = $list->limit($this->recordsLimit);
+
         $results = iterator_to_array($list);
         $data = [];
         foreach ($results as $record) {
@@ -397,6 +413,46 @@ trait Autocompleter
     public function setCustomSearchCols(array $customSearchCols)
     {
         $this->customSearchCols = $customSearchCols;
+        return $this;
+    }
+
+    /**
+     * Get the value of recordsLimit
+     * @return int
+     */
+    public function getRecordsLimit()
+    {
+        return $this->recordsLimit;
+    }
+
+    /**
+     * Set the value of recordsLimit
+     *
+     * @param int $recordsLimit
+     */
+    public function setRecordsLimit($recordsLimit)
+    {
+        $this->recordsLimit = $recordsLimit;
+        return $this;
+    }
+
+    /**
+     * Get the value of ajaxFullSearch
+     * @return bool
+     */
+    public function getAjaxFullSearch()
+    {
+        return $this->ajaxFullSearch;
+    }
+
+    /**
+     * Set the value of ajaxWildcard
+     *
+     * @param boolean $ajaxWildcard
+     */
+    public function setAjaxFullSearch($ajaxFullSearch)
+    {
+        $this->ajaxFullSearch = $ajaxFullSearch;
         return $this;
     }
 }

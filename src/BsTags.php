@@ -34,7 +34,8 @@ trait BsTags
      * @var array
      */
     private static $default_config = [
-        'allowClear' => true
+        'allowClear' => true,
+        'suggestionsThreshold' => 0,
     ];
 
     public function __construct($name, $title = null, $source = [], $value = null)
