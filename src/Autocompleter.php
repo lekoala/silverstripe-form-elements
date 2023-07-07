@@ -84,9 +84,9 @@ trait Autocompleter
         $sng = $class::singleton();
         $baseTable = $sng->baseTable();
 
-        $searchField = 'Title';
+        $searchField = '';
         $searchCandidates = [
-            $searchField, 'Name', 'Surname', 'Email', 'ID'
+            'Title', 'Name', 'Surname', 'Email', 'ID'
         ];
 
         // Ensure field exists, this is really rudimentary
@@ -99,13 +99,22 @@ trait Autocompleter
                 $searchField = $searchCandidate;
             }
         }
+
         $searchCols = [$searchField];
 
-        // For members, do something better
-        if ($baseTable == 'Member') {
-            $searchField = ['FirstName', 'Surname'];
-            $searchCols = ['FirstName', 'Surname', 'Email'];
+        // For Surname, do something better
+        if ($searchField == "Surname") {
+            // Show first name, surname
+            if (isset($db['FirstName'])) {
+                $searchField = ['FirstName', 'Surname'];
+                $searchCols = ['FirstName', 'Surname'];
+            }
+            // Also search email
+            if (isset($db['Email'])) {
+                $searchCols = ['FirstName', 'Surname', 'Email'];
+            }
         }
+
 
         if ($this->customSearchField) {
             $searchField = $this->customSearchField;
