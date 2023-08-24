@@ -21,12 +21,10 @@ class InputMaskTimeField extends InputMaskDateTimeField
     {
         parent::__construct($name, $title, $value);
 
-        // $format = self::getDefaultDateFormat();
-        // $this->setInputFormat($format);
-        // $this->setPlaceholder($format);
         $this->setAlias(self::ALIAS_DATETIME);
         $this->setInputFormat('HH:MM:ss');
         $this->setOutputFormat('HH:MM:ss');
+        $this->setPlaceholder('HH:MM:ss');
     }
 
     public function setValue($value, $data = null)
