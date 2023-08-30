@@ -12,6 +12,7 @@ class BsAutocompleteField extends TextField implements AjaxPoweredField
 {
     use BaseElement;
     use Autocompleter;
+    use AttributesHelper;
 
     /**
      * @config
