@@ -186,7 +186,7 @@ trait BsTags
     {
         $this->setConfig('server', $url);
         $this->setConfig('serverParams', [
-            'SecurityID' => $this->getForm()->getSecurityToken()->getValue()
+            'SecurityID' => $this->getForm()?->getSecurityToken()->getValue()
         ]);
         $this->setConfig('liveServer', true);
         return $this;

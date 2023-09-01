@@ -282,8 +282,17 @@ trait Autocompleter
      */
     public function Link($action = null)
     {
-        return Controller::join_links($this->form->FormAction(), 'field/' . $this->getName(), $action);
+        if ($this->form) {
+            return Controller::join_links($this->form->FormAction(), 'field/' . $this->getName(), $action);
+        }
+        return Controller::join_links(Controller::curr()->Link(), 'field/' . $this->getName(), $action);
     }
+
+    abstract public function getAjax();
+
+    abstract public function setAjax($url, $opts = []);
+
+    abstract public function isAjax();
 
     /**
      * Define a callback that returns the results as a map of id => title
