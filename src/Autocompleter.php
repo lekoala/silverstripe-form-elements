@@ -69,7 +69,7 @@ trait Autocompleter
      */
     protected $customSearchCols;
 
-    public function autocomplete(HTTPRequest $request)
+    public function autocomplete(HTTPRequest $request): HTTPResponse
     {
         if ($this->isDisabled() || $this->isReadonly()) {
             return $this->httpError(403);
