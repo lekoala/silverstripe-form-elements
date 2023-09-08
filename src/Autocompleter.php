@@ -335,7 +335,7 @@ trait Autocompleter
     /**
      * Get ajax filters
      *
-     * @return string
+     * @return array
      */
     public function getAjaxFilters()
     {
@@ -345,7 +345,7 @@ trait Autocompleter
     /**
      * Set ajax filters
      *
-     * @param string $ajaxFilters
+     * @param array $ajaxFilters
      * @return $this
      */
     public function setAjaxFilters($ajaxFilters)
