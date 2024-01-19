@@ -44,7 +44,7 @@ This method is called (unless disabled) in the `Field` method.
 
 ## Compatibility
 
-Tested with 4.13 but should work with ^4 or ^5.
+Tested with SilverStripe ^5.
 
 ## Maintainer
 
