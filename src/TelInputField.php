@@ -20,7 +20,7 @@ class TelInputField extends TextField
 
     /**
      * @config
-     * @var array
+     * @var array<string,mixed>
      */
     private static $default_config = [];
 
@@ -41,7 +41,9 @@ class TelInputField extends TextField
     {
         parent::__construct($name, $title, $value, $maxLength, $form);
         $this->mergeDefaultConfig();
-        $this->setDataFormat(self::config()->default_dataformat);
+        if (self::config()->default_dataformat) {
+            $this->setDataFormat(self::config()->default_dataformat);
+        }
     }
 
     public function Type()
