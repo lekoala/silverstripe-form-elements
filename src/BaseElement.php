@@ -130,12 +130,19 @@ trait BaseElement
         return implode(' ', $parts);
     }
 
-    public function getElementAttribute($k)
+    /**
+     * @return mixed
+     */
+    public function getElementAttribute(string $k)
     {
         return $this->elementAttributes[$k] ?? null;
     }
 
-    public function setElementAttribute($k, $v)
+    /**
+     * @param mixed $v
+     * @return $this
+     */
+    public function setElementAttribute(string $k, $v)
     {
         $this->elementAttributes[$k] = $v;
         return $this;

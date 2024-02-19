@@ -4,6 +4,7 @@ namespace LeKoala\FormElements;
 
 use SilverStripe\Forms\TextField;
 use SilverStripe\View\Requirements;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 
 /**
  * Store phone number in full international format
@@ -56,6 +57,9 @@ class TelInputField extends TextField
         return 'text ' . parent::extraClass();
     }
 
+    /**
+     * @return string
+     */
     public function getDataFormat()
     {
         return $this->getElementAttribute('data-dataformat');
@@ -64,20 +68,24 @@ class TelInputField extends TextField
     /**
      * The value you want when unmasking to hidden field
      *
-     * @param string $value The alias or "masked" to get the masked value as is
+     * @param string $dataformat The alias or "masked" to get the masked value as is
      * @return $this
      */
     public function setDataFormat($dataformat)
     {
-        return $this->getElementAttribute('data-dataformat', $dataformat);
+        return $this->setElementAttribute('data-dataformat', $dataformat);
     }
 
-    public function Field($properties = array())
+    /**
+     * @param array<string,mixed> $properties
+     * @return DBHTMLText|string
+     */
+    public function Field($properties = [])
     {
         return $this->wrapInElement('tel-input', $properties);
     }
 
-    public static function requirements()
+    public static function requirements(): void
     {
         Requirements::javascript("lekoala/silverstripe-form-elements: client/custom-elements/tel-input.min.js");
     }
