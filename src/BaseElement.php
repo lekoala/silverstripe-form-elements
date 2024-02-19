@@ -15,12 +15,12 @@ trait BaseElement
     /**
      * Config array
      *
-     * @var array
+     * @var array<string,mixed>
      */
     protected $config = [];
 
     /**
-     * @var array
+     * @var array<string,mixed>
      */
     protected $elementAttributes = [];
 
@@ -54,7 +54,7 @@ trait BaseElement
      * Set a config value
      *
      * @param string $key
-     * @param string $value
+     * @param mixed $value
      * @return $this
      */
     public function setConfig($key, $value)
@@ -68,7 +68,7 @@ trait BaseElement
     }
 
     /**
-     * @return array
+     * @return array<string,mixed>
      */
     public function readConfig()
     {
@@ -103,11 +103,17 @@ trait BaseElement
         return $this;
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function getElementAttributes()
     {
         return $this->elementAttributes;
     }
 
+    /**
+     * @return string
+     */
     public function getElementAttributesHTML()
     {
         $attributes = $this->getElementAttributes();
@@ -150,7 +156,7 @@ trait BaseElement
 
     /**
      * @param string $el
-     * @param array $properties
+     * @param array<string,mixed> $properties
      * @return string
      */
     protected function wrapInElement($el, $properties = [])
