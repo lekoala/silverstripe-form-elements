@@ -103,6 +103,15 @@ class TelInputField extends TextField
         return parent::setValue($value, $data);
     }
 
+    public function setAttribute($name, $value)
+    {
+        if (str_starts_with($name, 'data-parsley')) {
+            $this->hiddenField->setAttribute($name, $value);
+            return $this;
+        }
+        return parent::setAttribute($name, $value);
+    }
+
     protected function createHiddenInput($properties = [])
     {
         $html = $this->hiddenField->forTemplate();
