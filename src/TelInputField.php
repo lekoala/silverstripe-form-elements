@@ -2,6 +2,7 @@
 
 namespace LeKoala\FormElements;
 
+use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\View\Requirements;
 use SilverStripe\ORM\FieldType\DBHTMLText;
@@ -38,13 +39,21 @@ class TelInputField extends TextField
      */
     private static $defaut_dataformat = null;
 
+    protected HiddenField $hiddenField;
+
     public function __construct($name, $title = null, $value = '', $maxLength = null, $form = null)
     {
+        $this->hiddenField = new HiddenField($name, $title, $value);
         parent::__construct($name, $title, $value, $maxLength, $form);
         $this->mergeDefaultConfig();
         if (self::config()->default_dataformat) {
             $this->setDataFormat(self::config()->default_dataformat);
         }
+    }
+
+    public function getHiddenField(): HiddenField
+    {
+        return $this->hiddenField;
     }
 
     public function Type()
@@ -76,13 +85,38 @@ class TelInputField extends TextField
         return $this->setElementAttribute('data-dataformat', $dataformat);
     }
 
+    public function setTitle($title)
+    {
+        $this->hiddenField->setTitle($title);
+        return parent::setTitle($title);
+    }
+
+    public function setName($name)
+    {
+        $this->hiddenField->setName($name);
+        return parent::setName($name);
+    }
+
+    public function setValue($value, $data = null)
+    {
+        $this->hiddenField->setValue($value, $data);
+        return parent::setValue($value, $data);
+    }
+
+    protected function createHiddenInput($properties = [])
+    {
+        $html = $this->hiddenField->forTemplate();
+        return $html;
+    }
+
     /**
      * @param array<string,mixed> $properties
      * @return DBHTMLText|string
      */
     public function Field($properties = [])
     {
-        return $this->wrapInElement('tel-input', $properties);
+        $extraHtml = $this->createHiddenInput($properties);
+        return $this->wrapInElement('tel-input', $properties, $extraHtml);
     }
 
     public static function requirements(): void

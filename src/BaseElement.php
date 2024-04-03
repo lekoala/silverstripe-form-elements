@@ -157,9 +157,10 @@ trait BaseElement
     /**
      * @param string $el
      * @param array<string,mixed> $properties
+     * @param string $extraHtml
      * @return string
      */
-    protected function wrapInElement($el, $properties = [])
+    protected function wrapInElement($el, $properties = [], string $extraHtml = '')
     {
         if (static::config()->enable_requirements) {
             static::requirements();
@@ -170,7 +171,7 @@ trait BaseElement
         $attrsHTML = $this->getElementAttributesHTML();
 
         // Simply wrap with custom element and set config
-        $html = "<$el data-config='$config' $attrsHTML>$html</$el>";
+        $html = "<$el data-config='$config' $attrsHTML>{$html}{$extraHtml}</$el>";
         return $html;
     }
 
