@@ -313,7 +313,7 @@ trait Autocompleter
     /**
      * Get ajax where
      *
-     * @return string
+     * @return string|array
      */
     public function getAjaxWhere()
     {
@@ -323,7 +323,7 @@ trait Autocompleter
     /**
      * Set ajax where
      *
-     * @param string $ajaxWhere
+     * @param string|array $ajaxWhere
      * @return $this
      */
     public function setAjaxWhere($ajaxWhere)
