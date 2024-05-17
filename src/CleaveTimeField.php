@@ -53,7 +53,6 @@ class CleaveTimeField extends CleaveField
         if ($this->isNumeric && is_numeric($value)) {
             $old = $value;
             $value = self::secondsToTime($value);
-            d($value, $old);
         }
         // Don't call parent that can set locale formatted date
         $this->value = $value;
