@@ -21,7 +21,7 @@ class CleaveTimeField extends CleaveField
     public function __construct($name, $title = null, $value = null)
     {
         parent::__construct($name, $title, $value);
-
+        $this->setConfig("swapHiddenInput", false);
         $this->setCleaveType('time');
     }
 
