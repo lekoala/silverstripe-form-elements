@@ -31,8 +31,10 @@ class CleaveTimeField extends CleaveField
      */
     public static function secondsToTime($seconds)
     {
-        $t = round($seconds);
-        return sprintf('%02d:%02d:%02d', round($t / 3600), round($t / 60) % 60, $t % 60);
+        $hours = floor($seconds / 3600);
+        $mins = floor($seconds / 60) % 60;
+        $secs = floor($seconds % 60);
+        return sprintf('%02d:%02d:%02d', $hours, $mins, $secs);
     }
 
     /**
@@ -51,6 +53,7 @@ class CleaveTimeField extends CleaveField
         if ($this->isNumeric && is_numeric($value)) {
             $old = $value;
             $value = self::secondsToTime($value);
+            d($value, $old);
         }
         // Don't call parent that can set locale formatted date
         $this->value = $value;
