@@ -5,6 +5,7 @@ namespace LeKoala\FormElements;
 use SilverStripe\Forms\FormField;
 use SilverStripe\View\Requirements;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
 
 /**
  * @link https://tiptap.dev/
@@ -39,6 +40,11 @@ class TipTapEditor extends HTMLEditorField
 
         if (!$config) {
             $this->editorConfig = new TipTapEditorConfig;
+
+            // Required for sanitizer
+            $defaultConfig = HTMLEditorConfig::get();
+            $this->editorConfig->setOption('valid_elements', $defaultConfig->getOption('valid_elements'));
+            $this->editorConfig->setOption('extended_valid_elements', $defaultConfig->getOption('extended_valid_elements'));
         }
     }
 
