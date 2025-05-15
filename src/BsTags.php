@@ -16,6 +16,7 @@ trait BsTags
 
     /**
      * Callback to create tags
+     * See docs/on-new-tag.md for sample code
      *
      * @var Callable
      */
