@@ -60,7 +60,7 @@ trait Autocompleter
     protected $recordsLimit = 1000;
 
     /**
-     * @var string
+     * @var string|array
      */
     protected $customSearchField;
 
@@ -99,7 +99,11 @@ trait Autocompleter
 
         $searchField = '';
         $searchCandidates = [
-            'Title', 'Name', 'Surname', 'Email', 'ID'
+            'Title',
+            'Name',
+            'Surname',
+            'Email',
+            'ID'
         ];
 
         // Ensure field exists, this is really rudimentary
@@ -380,9 +384,9 @@ trait Autocompleter
     /**
      * Get the value of customSearchField
      *
-     * @return string
+     * @return string|array
      */
-    public function getCustomSearchField(): string
+    public function getCustomSearchField()
     {
         return $this->customSearchField;
     }
@@ -394,10 +398,10 @@ trait Autocompleter
      *
      * This will be the label returned by the autocomplete
      *
-     * @param string $customSearchField
+     * @param string|array $customSearchField
      * @return $this
      */
-    public function setCustomSearchField(string $customSearchField)
+    public function setCustomSearchField($customSearchField)
     {
         $this->customSearchField = $customSearchField;
         return $this;
