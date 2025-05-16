@@ -2,10 +2,8 @@
 
 namespace LeKoala\FormElements;
 
-use SilverStripe\ORM\Relation;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\View\Requirements;
-use SilverStripe\ORM\DataObjectInterface;
 
 /**
  * Implements AjaxPoweredField + TagsField

@@ -48,4 +48,36 @@ class BsTagsMultiField extends ListboxField implements AjaxPoweredField, TagsFie
             $record->$fieldName = $this->stringEncode($items);
         }
     }
+
+    public function getValueArray()
+    {
+        $value = $this->Value();
+        $validValues = $this->getValidValues();
+        if (empty($validValues)) {
+            return [];
+        }
+
+        // Accepts int or string just the same
+        $targetTypes = ['string', 'integer'];
+
+        if (is_array($value) && count($value) > 0) {
+            // Disable sanity check that breaks due to placeholder being a string
+            $replaced = [];
+            foreach ($value as $item) {
+                if (!is_array($item)) {
+                    $item = json_decode($item, true);
+                }
+
+                if (in_array(gettype($item), $targetTypes)) {
+                    $replaced[] = $item;
+                } elseif (isset($item['Value'])) {
+                    $replaced[] = $item['Value'];
+                }
+            }
+
+            $value = $replaced;
+        }
+
+        return $this->getListValues($value);
+    }
 }
