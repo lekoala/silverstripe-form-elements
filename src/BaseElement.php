@@ -87,14 +87,14 @@ trait BaseElement
     /**
      * Merge an array of settings with the default/current
      * configuration.
-     * 
+     *
      * @param array $config
      * @return self
      */
     public function mergeConfig(array $config)
     {
         $this->config = array_merge($this->config, $config);
-        
+
         return $this;
     }
 
