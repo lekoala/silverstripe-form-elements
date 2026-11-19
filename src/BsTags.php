@@ -4,6 +4,7 @@ namespace LeKoala\FormElements;
 
 use SilverStripe\ORM\DataObject;
 use SilverStripe\View\Requirements;
+use SilverStripe\Core\Validation\ValidationResult;
 
 /**
  * Implements AjaxPoweredField + TagsField
@@ -244,20 +245,19 @@ trait BsTags
     /**
      * Validate this field
      *
-     * @param Validator $validator
-     * @return bool
+     * @return ValidationResult
      */
-    public function validate($validator)
+    public function validate(): ValidationResult
     {
         // Tags can be created on the fly and cannot be validated
         if ($this->getTags()) {
-            return true;
+            return ValidationResult::create();
         }
 
         if ($this->isAjax()) {
-            return true;
+            return ValidationResult::create();
         }
 
-        return parent::validate($validator);
+        return parent::validate();
     }
 }

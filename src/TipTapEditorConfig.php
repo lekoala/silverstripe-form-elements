@@ -4,6 +4,7 @@ namespace LeKoala\FormElements;
 
 use SilverStripe\i18n\i18nEntityProvider;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorConfig;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorRuleSet;
 
 /**
  * Default configuration for HtmlEditor specific to TipTap
@@ -32,11 +33,13 @@ class TipTapEditorConfig extends HTMLEditorConfig implements i18nEntityProvider
      */
     protected $buttons = [];
 
+    private ?HTMLEditorRuleSet $elementRuleSet = null;
+
     /**
      * @param string $key
      * @return mixed
      */
-    public function getOption($key)
+    public function getOption(string $key): mixed
     {
         if (isset($this->settings[$key])) {
             return $this->settings[$key];
@@ -47,9 +50,9 @@ class TipTapEditorConfig extends HTMLEditorConfig implements i18nEntityProvider
     /**
      * @param string $key
      * @param mixed $value
-     * @return self
+     * @return static
      */
-    public function setOption($key, $value)
+    public function setOption(string $key, mixed $value): static
     {
         $this->settings[$key] = $value;
         return $this;
@@ -57,9 +60,9 @@ class TipTapEditorConfig extends HTMLEditorConfig implements i18nEntityProvider
 
     /**
      * @param array $options
-     * @return self
+     * @return static
      */
-    public function setOptions($options)
+    public function setOptions(array $options): static
     {
         foreach ($options as $key => $value) {
             $this->settings[$key] = $value;
@@ -70,26 +73,33 @@ class TipTapEditorConfig extends HTMLEditorConfig implements i18nEntityProvider
     /**
      * Get all settings
      *
-     * @return array
+     * @return array<string,mixed>
      */
-    public function getSettings()
+    public function getSettings(): array
     {
         return $this->settings;
     }
 
     /**
-     * @return array
+     * @return array<string,mixed>
      */
-    public function getAttributes()
+    public function getOptions(): array
     {
-        $attrs = [];
-        return $attrs;
+        return $this->settings;
     }
 
     /**
-     * @return array
+     * @return array<string,mixed>
      */
-    public function getExtraAttributes()
+    public function getAttributes(): array
+    {
+        return parent::getAttributes();
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    public function getExtraAttributes(): array
     {
         $attrs = [];
         if (!empty($this->removeButtons)) {
@@ -103,66 +113,73 @@ class TipTapEditorConfig extends HTMLEditorConfig implements i18nEntityProvider
 
     /**
      */
-    protected function getConfig()
+    protected function getConfig(): array
     {
         $settings = $this->getSettings();
         return $settings;
     }
 
-    public function init()
+    public function init(): void
     {
-        HTMLEditorConfig::set_active(new static);
+        HTMLEditorConfig::set_active(static::create());
     }
 
-    public function getConfigSchemaData()
+    public function getConfigSchemaData(): array
     {
         $data = parent::getConfigSchemaData();
         return $data;
     }
 
-    public function provideI18nEntities()
+    public function provideI18nEntities(): array
     {
         $entities = [];
         return $entities;
     }
 
     /**
-     * @param string $key
-     * @return mixed
+     * @return array<int,string>
      */
-    public function getRemoveButtons()
+    public function getRemoveButtons(): array
     {
         return $this->removeButtons;
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
-     * @return self
+     * @param array<int,string> $buttons
+     * @return static
      */
-    public function setRemoveButtons($v)
+    public function setRemoveButtons(array $buttons): static
     {
-        $this->removeButtons = $v;
+        $this->removeButtons = $buttons;
         return $this;
     }
 
     /**
-     * @param string $key
-     * @return mixed
+     * @return array<int,string>
      */
-    public function getButtons()
+    public function getButtons(): array
     {
         return $this->buttons;
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
-     * @return self
+     * @param array<int,string> $buttons
+     * @return static
      */
-    public function setButtons($v)
+    public function setButtons(array $buttons): static
     {
-        $this->buttons = $v;
+        $this->buttons = $buttons;
+        return $this;
+    }
+
+    public function getElementRuleSet(): HTMLEditorRuleSet
+    {
+        return $this->elementRuleSet ??= new HTMLEditorRuleSet();
+    }
+
+    public function setElementRuleSet(HTMLEditorRuleSet $ruleset): static
+    {
+        $this->elementRuleSet = $ruleset;
         return $this;
     }
 }
