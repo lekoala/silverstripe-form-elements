@@ -14,7 +14,7 @@ class NumericReadonlyField extends ReadonlyField
     /**
      * @return mixed|string
      */
-    public function Value()
+    public function getFormattedValue(): mixed
     {
         $value = $this->dataValue();
         if (!$value) {

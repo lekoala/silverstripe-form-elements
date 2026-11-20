@@ -51,7 +51,7 @@ class BsTagsMultiField extends ListboxField implements AjaxPoweredField, TagsFie
 
     public function getValueArray()
     {
-        $value = $this->Value();
+        $value = $this->getValue();
         $validValues = $this->getValidValues();
         if (empty($validValues)) {
             return [];
